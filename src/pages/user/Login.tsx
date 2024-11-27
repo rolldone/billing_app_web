@@ -3,6 +3,7 @@ import BaseStateClass from "./components/helper/BaseStateClass";
 import { Link } from "react-router-dom";
 import AuthService, { AuthType } from "./services/AuthService";
 import { SettingType } from "./services/SettingService";
+import ROUTE_CLICK from "../../consts/RouteClick";
 
 export type StateType = {
     form_data: AuthType
@@ -207,7 +208,7 @@ export default function Login(props: any) {
             </div>
             <div className="text-center text-secondary mt-3">
                 Don't have account yet?{" "}
-                <Link to="/member/register" tabIndex={-1}>
+                <Link to={ROUTE_CLICK["user.register"]} tabIndex={-1}>
                     Sign up
                 </Link>
             </div>
