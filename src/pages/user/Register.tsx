@@ -39,7 +39,7 @@ export class RegisterClass extends BaseStateClass<StateType, PropType> {
     try {
       let form_data = this.state.form_data
       let resData = await AuthService.register(form_data)
-
+      alert("Register success")
     } catch (error) {
       console.error("submit - err :: ", error)
     }

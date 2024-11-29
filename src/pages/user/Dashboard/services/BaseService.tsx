@@ -41,5 +41,11 @@ export default {
         "project.view": BASE_API_URL + "/api/project/:id",
         "project.update": BASE_API_URL + "/api/project/update",
         "project.delete": BASE_API_URL + "/api/project/delete",
+
+        "cost.new": BASE_API_URL + "/api/cost/add",
+        "cost.update": BASE_API_URL + "/api/cost/update",
+        "cost.costs": BASE_API_URL + "/api/cost/costs",
+        "cost.view": BASE_API_URL + "/api/cost/:id",
+        "cost.delete": BASE_API_URL + "/api/cost/delete"
     },
 };
