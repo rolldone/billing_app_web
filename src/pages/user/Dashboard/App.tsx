@@ -6,6 +6,9 @@ import ProjectList from "./project/ProjectList";
 import Footer from "./Footer";
 import ProjectNew from "./project/ProjectNew";
 import ProjectUpdate from "./project/ProjectUpdate";
+import QuotationList from "./quotation/QuotationList";
+import QuotationNew from "./quotation/QuotationNew";
+import QuotationUpdate from "./quotation/QuotationUpdate";
 
 export default function App(props: any) {
 
@@ -64,6 +67,10 @@ export default function App(props: any) {
                     <Route path="/project" element={<ProjectList />} />
                     <Route path="/project/new" element={<ProjectNew />} />
                     <Route path="/project/:id" element={<ProjectUpdate />} />
+                    <Route path="/quotation" element={<QuotationList />} />
+                    <Route path="/quotation/new" element={<QuotationNew />} />
+                    <Route path="/quotation/:id" element={<QuotationUpdate />} />
+
                     <Route path="*" element={<NotFound />} /> {/* Catch-all route for 404 */}
                 </Routes>
                 <footer className="footer footer-transparent d-print-none">

@@ -126,9 +126,8 @@ export class QuotationListClass extends BaseStateClass<StateType, PropType> {
                                             <input className="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices" />
                                         </th>
                                         <th>Name</th>
-                                        <th>Price</th>
-                                        <th>Tax</th>
-                                        <th>Tax Type</th>
+                                        <th>Total Tax Price</th>
+                                        <th>Total</th>
                                         <th>Description</th>
                                         <th>Updated at</th>
                                         {/* <th className="w-1" /> */}
@@ -153,10 +152,19 @@ export class QuotationListClass extends BaseStateClass<StateType, PropType> {
                                             <td>
                                                 <input className="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice" />
                                             </td>
-                                            <td>{val.project?.name}</td>
-                                            <td className="text-secondary">{val.price}</td>
-                                            <td className="text-secondary">{val.tax_percent}</td>
-                                            <td className="text-secondary">{val.tax_type}</td>
+                                            <td>
+                                                <div className="flex-fill">
+                                                    <div className="font-weight-medium">{val.name||"No Name"}</div>
+                                                    <div className="text-secondary">
+                                                        <a href="#" className="text-reset">
+                                                            {val.project?.name}
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="text-secondary">{val.total_tax_price}</td>
+                                            <td className="text-secondary">{val.total}</td>
+                                            <td className="text-secondary">{val.description}</td>
                                             <td className="text-secondary">{val.updated_at}</td>
                                             <td>
                                                 <Link to={SetUrl(ROUTE_CLICK["user.quotation.view"], [{ ":id": val.id }])}>Edit</Link>

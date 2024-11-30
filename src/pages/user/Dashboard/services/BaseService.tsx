@@ -42,10 +42,10 @@ export default {
         "project.update": BASE_API_URL + "/api/project/update",
         "project.delete": BASE_API_URL + "/api/project/delete",
 
-        "cost.new": BASE_API_URL + "/api/cost/add",
-        "cost.update": BASE_API_URL + "/api/cost/update",
-        "cost.costs": BASE_API_URL + "/api/cost/costs",
-        "cost.view": BASE_API_URL + "/api/cost/:id",
-        "cost.delete": BASE_API_URL + "/api/cost/delete"
+        "quotation.new": BASE_API_URL + "/api/quotation/add",
+        "quotation.update": BASE_API_URL + "/api/quotation/update",
+        "quotation.quotations": BASE_API_URL + "/api/quotation/quotations",
+        "quotation.view": BASE_API_URL + "/api/quotation/:id",
+        "quotation.delete": BASE_API_URL + "/api/quotation/delete"
     },
 };

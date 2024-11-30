@@ -66,7 +66,7 @@ export class SideMenuClass extends BaseStateClass<StateType, PropType> {
                 </Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link" to={ROUTE_CLICK["user.cost"]}>
+                <Link className="nav-link" to={ROUTE_CLICK["user.quotation"]}>
                     <span className="nav-link-icon d-md-none d-lg-inline-block">
                         {/* Download SVG icon from http://tabler-icons.io/i/ghost */}
                         <svg
@@ -88,7 +88,7 @@ export class SideMenuClass extends BaseStateClass<StateType, PropType> {
                             <path d="M10 14a3.5 3.5 0 0 0 4 0" />
                         </svg>
                     </span>
-                    <span className="nav-link-title">Cost</span>
+                    <span className="nav-link-title">Quotation</span>
                 </Link>
             </li>
 
@@ -115,7 +115,7 @@ export class SideMenuClass extends BaseStateClass<StateType, PropType> {
                             <path d="M10 14a3.5 3.5 0 0 0 4 0" />
                         </svg>
                     </span>
-                    <span className="nav-link-title">Subscribe</span>
+                    <span className="nav-link-title">Bill</span>
                 </Link>
             </li>
             <li className="nav-item">
@@ -141,7 +141,7 @@ export class SideMenuClass extends BaseStateClass<StateType, PropType> {
                             <path d="M15 13l6 6" />
                         </svg>
                     </span>
-                    <span className="nav-link-title">Order</span>
+                    <span className="nav-link-title">Payment</span>
                 </Link>
             </li>
             <li className="nav-item">
