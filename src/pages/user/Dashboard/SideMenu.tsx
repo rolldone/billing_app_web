@@ -91,9 +91,33 @@ export class SideMenuClass extends BaseStateClass<StateType, PropType> {
                     <span className="nav-link-title">Quotation</span>
                 </Link>
             </li>
-
             <li className="nav-item">
-                <Link className="nav-link" to={ROUTE_CLICK["user.subscribe.list"]}>
+                <Link className="nav-link" to={ROUTE_CLICK["user.member"]}>
+                    <span className="nav-link-icon d-md-none d-lg-inline-block">
+                        {/* Download SVG icon from http://tabler-icons.io/i/brand-figma */}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width={24}
+                            height={24}
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="icon"
+                        >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M15 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                            <path d="M6 3m0 3a3 3 0 0 1 3 -3h6a3 3 0 0 1 3 3v0a3 3 0 0 1 -3 3h-6a3 3 0 0 1 -3 -3z" />
+                            <path d="M9 9a3 3 0 0 0 0 6h3m-3 0a3 3 0 1 0 3 3v-15" />
+                        </svg>
+                    </span>
+                    <span className="nav-link-title">Member</span>
+                </Link>
+            </li>
+            <li className="nav-item">
+                <Link className="nav-link" to={ROUTE_CLICK["user.bill.list"]}>
                     <span className="nav-link-icon d-md-none d-lg-inline-block">
                         {/* Download SVG icon from http://tabler-icons.io/i/ghost */}
                         <svg
@@ -169,31 +193,7 @@ export class SideMenuClass extends BaseStateClass<StateType, PropType> {
                     <span className="nav-link-title">Setting</span>
                 </a>
             </li>
-            <li className="nav-item">
-                <a className="nav-link" href="./illustrations.html">
-                    <span className="nav-link-icon d-md-none d-lg-inline-block">
-                        {/* Download SVG icon from http://tabler-icons.io/i/brand-figma */}
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width={24}
-                            height={24}
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="icon"
-                        >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M15 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                            <path d="M6 3m0 3a3 3 0 0 1 3 -3h6a3 3 0 0 1 3 3v0a3 3 0 0 1 -3 3h-6a3 3 0 0 1 -3 -3z" />
-                            <path d="M9 9a3 3 0 0 0 0 6h3m-3 0a3 3 0 1 0 3 3v-15" />
-                        </svg>
-                    </span>
-                    <span className="nav-link-title">Member</span>
-                </a>
-            </li>
+            
         </ul>
     }
 }

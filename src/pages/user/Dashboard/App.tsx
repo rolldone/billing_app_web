@@ -9,6 +9,9 @@ import ProjectUpdate from "./project/ProjectUpdate";
 import QuotationList from "./quotation/QuotationList";
 import QuotationNew from "./quotation/QuotationNew";
 import QuotationUpdate from "./quotation/QuotationUpdate";
+import MemberList from "./member/MemberList";
+import MemberNew from "./member/MemberNew";
+import MemberUpdate from "./member/MemberUpdate";
 
 export default function App(props: any) {
 
@@ -70,6 +73,10 @@ export default function App(props: any) {
                     <Route path="/quotation" element={<QuotationList />} />
                     <Route path="/quotation/new" element={<QuotationNew />} />
                     <Route path="/quotation/:id" element={<QuotationUpdate />} />
+                    <Route path="/member" element={<MemberList />} />
+                    <Route path="/member/new" element={<MemberNew />} />
+                    <Route path="/member/:id" element={<MemberUpdate />} />
+
 
                     <Route path="*" element={<NotFound />} /> {/* Catch-all route for 404 */}
                 </Routes>

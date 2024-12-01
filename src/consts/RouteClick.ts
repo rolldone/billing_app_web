@@ -12,13 +12,14 @@ let DEFINE_ROUTE_MAP = {
   "user.quotation": "user/quotation",
   "user.quotation.new": "user/quotation/new",
   "user.quotation.view": "user/quotation/:id",
-  "user.subscribe.list": "user/subscribe",
-  "user.subscribe.new": "user/subscribe/new",
-  "user.subscribe.view": "user/subscribe/:id",
+  "user.bill.list": "user/bill",
+  "user.bill.new": "user/bill/new",
+  "user.bill.view": "user/bill/:id",
   "user.order": "user/order",
   "user.order.new": "user/order/new",
   "user.order.view": "user/order/:id",
   "user.member": "user/member",
+  "user.member.new": "user/member/new",
   "user.member.view": "user/member/:id"
 }
 

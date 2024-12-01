@@ -46,6 +46,18 @@ export default {
         "quotation.update": BASE_API_URL + "/api/quotation/update",
         "quotation.quotations": BASE_API_URL + "/api/quotation/quotations",
         "quotation.view": BASE_API_URL + "/api/quotation/:id",
-        "quotation.delete": BASE_API_URL + "/api/quotation/delete"
+        "quotation.delete": BASE_API_URL + "/api/quotation/delete",
+
+        "bill.new": BASE_API_URL + "/api/bill/add",
+        "bill.update": BASE_API_URL + "/api/bill/update",
+        "bill.bills": BASE_API_URL + "/api/bill/bills",
+        "bill.view": BASE_API_URL + "/api/bill/:id",
+        "bill.delete": BASE_API_URL + "/api/bill/delete",
+
+        "member.new": BASE_API_URL + "/api/member/add",
+        "member.update": BASE_API_URL + "/api/member/update",
+        "member.members": BASE_API_URL + "/api/member/members",
+        "member.view": BASE_API_URL + "/api/member/:id",
+        "member.delete": BASE_API_URL + "/api/member/delete"
     },
 };
