@@ -12,6 +12,8 @@ import QuotationUpdate from "./quotation/QuotationUpdate";
 import MemberList from "./member/MemberList";
 import MemberNew from "./member/MemberNew";
 import MemberUpdate from "./member/MemberUpdate";
+import BillList from "./bill/BillList";
+import BillNew from "./bill/BillNew";
 
 export default function App(props: any) {
 
@@ -76,7 +78,9 @@ export default function App(props: any) {
                     <Route path="/member" element={<MemberList />} />
                     <Route path="/member/new" element={<MemberNew />} />
                     <Route path="/member/:id" element={<MemberUpdate />} />
-
+                    <Route path="/bill" element={<BillList />} />
+                    <Route path="/bill/new" element={<BillNew />} />
+                    
 
                     <Route path="*" element={<NotFound />} /> {/* Catch-all route for 404 */}
                 </Routes>
