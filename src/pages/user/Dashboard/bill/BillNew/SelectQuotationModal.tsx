@@ -5,6 +5,7 @@ import QuotationService, { QuotationType } from "../../services/QuotationService
 import { debounce, DebouncedFunc } from "lodash-es";
 
 export type PropType = {
+    project_id: string
     show: boolean
     onListener: {
         (props: {
@@ -45,6 +46,7 @@ class SelectQuotationModalClass extends BaseStateClass<StateType, PropType> {
     async getQuotations() {
         try {
             let form_query = this.state.form_query
+            form_query.project_id = this.props.project_id || 0
             let resData = await QuotationService.gets(form_query);
             return resData
         } catch (error) {

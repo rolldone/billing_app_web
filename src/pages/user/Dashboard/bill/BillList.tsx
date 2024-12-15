@@ -1,10 +1,13 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import BaseStateClass from "../../components/helper/BaseStateClass";
 import { Link } from "react-router-dom";
 import ROUTE_CLICK from "../../../../consts/RouteClick";
+import BillService, { BillType } from "../services/BillService";
+import { Dropdown } from "react-bootstrap";
+import SetUrl from "../../components/helper/SetUrl";
 
 export type StateType = {
-
+    bill_datas: Array<BillType>
 }
 
 export type PropType = {
@@ -12,6 +15,28 @@ export type PropType = {
 }
 
 export class BillListClass extends BaseStateClass<StateType, PropType> {
+
+    async mounted() {
+        this.setBills(await this.getBills())
+    }
+
+    async getBills() {
+        try {
+            let resData = await BillService.gets({});
+            return resData
+        } catch (error) {
+            console.error("getBill - err :: ", error);
+        }
+
+    }
+
+    setBills(props: any) {
+        if (props == null) return
+        let _return = props.return
+        this.setState({
+            bill_datas: _return
+        })
+    }
 
     renderHead() {
         return <div className="page-header d-print-none">
@@ -88,11 +113,69 @@ export class BillListClass extends BaseStateClass<StateType, PropType> {
     }
 
     render() {
+        let bill_datas = this.state.bill_datas
         return <>
             {this.renderHead()}
             <div className="page-body">
                 <div className="container-xl">
+                    <div className="card">
+                        <div className="table-responsive" style={{ minHeight: "500px" }}>
+                            <table className="table table-vcenter card-table">
+                                <thead>
+                                    <tr>
+                                        <th className="w-1">
+                                            <input className="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices" />
+                                        </th>
+                                        <th>Project</th>
+                                        <th>Total</th>
+                                        <th>Member</th>
+                                        <th>Updated at</th>
+                                        {/* <th className="w-1" /> */}
+                                        <th>
+                                            <Dropdown>
+                                                <Dropdown.Toggle size="sm" id="dropdown-basic">
+                                                    -
+                                                </Dropdown.Toggle>
 
+                                                <Dropdown.Menu>
+                                                    <Dropdown.Item href="#/action-1">Load Data</Dropdown.Item>
+                                                    <Dropdown.Item href="#/action-2">Delete</Dropdown.Item>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {bill_datas.map((val, i) => {
+                                        return <tr key={val.id}>
+                                            <td>
+                                                <input className="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice" />
+                                            </td>
+                                            <td>
+                                                <div className="flex-fill">
+                                                    <div className="font-weight-medium">{val.project?.name || "No Name"}</div>
+                                                    <div className="text-secondary">
+                                                        {val.status == "deactivate" ?
+                                                            <a href="#" className="text-reset">
+                                                                ({val.status})
+                                                            </a>
+                                                            : null}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="text-secondary">{val.total_price}</td>
+                                            <td className="text-secondary">{val.member?.name}</td>
+                                            <td className="text-secondary">{val.updated_at}</td>
+                                            <td>
+                                                <Link to={SetUrl(ROUTE_CLICK["user.bill.view"], [{ ":id": val.id }])}>Edit</Link>
+                                            </td>
+                                        </tr>
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
@@ -102,7 +185,13 @@ export class BillListClass extends BaseStateClass<StateType, PropType> {
 export default function BillList(props: PropType) {
     let methods = useMemo(() => new BillListClass(), []);
 
-    methods.defineState(useState<StateType>({}), props);
+    methods.defineState(useState<StateType>({
+        bill_datas: []
+    }), props);
+
+    useEffect(() => {
+        methods.mounted()
+    }, [])
 
     return methods.render()
 }

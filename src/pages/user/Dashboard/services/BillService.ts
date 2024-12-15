@@ -5,13 +5,31 @@ import { ProjectType } from "./ProjectService"
 import { QuotationType } from "./QuotationService"
 
 
+export const BILL_OPTIONS = [
+    {
+        label : "One Time",
+        value : "one_time"
+    },
+    {
+        label : "Recurring",
+        value : "recurring"
+    },{
+        label : "Debt",
+        value : "debt"
+    }
+]
+
+export const BILL_STATUS_PENDING = "pending"
+export const BILL_STATUS_FINISH = "finish"
+export const BILL_STATUS_CANCEL = "cancel"
+
 export type BillType = {
     id?: string
     member_id?: string
     project_id?: string
     total_price?: number
     status?: string
-    type?: string
+    type?: "one_time" | "recurring" | "debt"
 
     created_at?: string
     updated_at?: string
