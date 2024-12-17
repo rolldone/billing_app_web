@@ -15,12 +15,16 @@ let DEFINE_ROUTE_MAP = {
   "user.bill.list": "user/bill",
   "user.bill.new": "user/bill/new",
   "user.bill.view": "user/bill/:id",
-  "user.order": "user/order",
-  "user.order.new": "user/order/new",
-  "user.order.view": "user/order/:id",
+  "user.payment": "user/payment",
+  "user.payment.new": "user/payment/new",
+  "user.payment.view": "user/payment/:id",
   "user.member": "user/member",
   "user.member.new": "user/member/new",
-  "user.member.view": "user/member/:id"
+  "user.member.view": "user/member/:id",
+  "user.payment.list": "user/payment",
+  "user.payment_dest.list": "user/payment_dest",
+  "user.payment_dest.new": "user/payment_dest/new",
+  "user.payment_dest.view": "user/payment_dest/:id",
 }
 
 const _route = DEFINE_ROUTE_MAP as any

@@ -1,6 +1,7 @@
 import SetUrl from "../../components/helper/SetUrl"
 import BaseService from "./BaseService"
 import { MemberType } from "./MemberService"
+import { PaymentType } from "./PaymentService"
 import { ProjectType } from "./ProjectService"
 import { QuotationType } from "./QuotationService"
 
@@ -37,6 +38,7 @@ export type BillType = {
 
     member?: MemberType
     project?: ProjectType
+    payments?: Array<PaymentType>
 
     // Local
     bill_items?: Array<BillItemType>

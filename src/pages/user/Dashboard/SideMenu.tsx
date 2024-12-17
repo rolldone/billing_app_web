@@ -40,6 +40,30 @@ export class SideMenuClass extends BaseStateClass<StateType, PropType> {
                     <span className="nav-link-title">Dashboard</span>
                 </a>
             </li>
+            <li className="nav-item">
+                <Link className="nav-link" to={ROUTE_CLICK["user.payment_dest.list"]}>
+                    <span className="nav-link-icon d-md-none d-lg-inline-block">
+                        {/* Download SVG icon from http://tabler-icons.io/i/checkbox */}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width={24}
+                            height={24}
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="icon"
+                        >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M9 11l3 3l8 -8" />
+                            <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+                        </svg>
+                    </span>
+                    <span className="nav-link-title">Payment Destination</span>
+                </Link>
+            </li>
 
             <li className="nav-item">
                 <Link className="nav-link" to={ROUTE_CLICK["user.project.list"]}>
@@ -143,7 +167,7 @@ export class SideMenuClass extends BaseStateClass<StateType, PropType> {
                 </Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link" to={ROUTE_CLICK["user.order"]}>
+                <Link className="nav-link" to={ROUTE_CLICK["user.payment"]}>
                     <span className="nav-link-icon d-md-none d-lg-inline-block">
                         {/* Download SVG icon from http://tabler-icons.io/i/mail-opened */}
                         <svg

@@ -58,6 +58,18 @@ export default {
         "member.update": BASE_API_URL + "/api/member/update",
         "member.members": BASE_API_URL + "/api/member/members",
         "member.view": BASE_API_URL + "/api/member/:id",
-        "member.delete": BASE_API_URL + "/api/member/delete"
+        "member.delete": BASE_API_URL + "/api/member/delete",
+
+        "payment.payments": BASE_API_URL + "/api/payment/payments",
+        "payment.new": BASE_API_URL + "/api/payment/add",
+        "payment.view": BASE_API_URL + "/api/payment/:id",
+        "payment.update": BASE_API_URL + "/api/payment/update",
+        "payment.delete": BASE_API_URL + "/api/payment/delete",
+
+        "payment_dest.payment_dests": BASE_API_URL + "/api/payment_dest/payment_dests",
+        "payment_dest.new": BASE_API_URL + "/api/payment_dest/add",
+        "payment_dest.view": BASE_API_URL + "/api/payment_dest/:id",
+        "payment_dest.update": BASE_API_URL + "/api/payment_dest/update",
+        "payment_dest.delete": BASE_API_URL + "/api/payment_dest/delete",
     },
 };

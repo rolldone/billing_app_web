@@ -15,6 +15,12 @@ import MemberUpdate from "./member/MemberUpdate";
 import BillList from "./bill/BillList";
 import BillNew from "./bill/BillNew";
 import BillUpdate from "./bill/BillUpdate";
+import Payment from "./payment/PaymentList";
+import PaymentNew from "./payment/PaymentNew";
+import PaymentUpdate from "./payment/PaymentUpdate";
+import PaymentDestList from "./payment_dest/PaymentDestList";
+import PaymentDestNew from "./payment_dest/PaymentDestNew";
+import PaymentDestUpdate from "./payment_dest/PaymentDestUpdate";
 
 export default function App(props: any) {
 
@@ -82,8 +88,15 @@ export default function App(props: any) {
                     <Route path="/bill" element={<BillList />} />
                     <Route path="/bill/new" element={<BillNew />} />
                     <Route path="/bill/:id" element={<BillUpdate />} />
+                    <Route path="/payment" element={<Payment />}></Route>
+                    <Route path="/payment/new" element={<PaymentNew />}></Route>
+                    <Route path="/payment/:id" element={<PaymentUpdate />}></Route>
+                    
+                    <Route path="/payment_dest" element={<PaymentDestList />} />
+                    <Route path="/payment_dest/new" element={<PaymentDestNew />} />
+                    <Route path="/payment_dest/:id" element={<PaymentDestUpdate />} />
 
-
+                    
                     <Route path="*" element={<NotFound />} /> {/* Catch-all route for 404 */}
                 </Routes>
                 <footer className="footer footer-transparent d-print-none">
