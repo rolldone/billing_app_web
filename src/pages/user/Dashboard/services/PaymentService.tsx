@@ -14,10 +14,11 @@ export type PaymentType = {
     created_at?: string
     updated_at?: string
     deleted_at?: string
+    attach_file?: string
 
     // Relation
     bill?: BillType
-    
+
     // Local
     new_remaining?: number
     remaining?: number
@@ -34,13 +35,13 @@ export type PaymentQueryType = {
 export default {
     async add(props: PaymentType) {
         try {
-            debugger;
             let httpRequest = BaseService.superagent.post(BaseService.URL["payment.new"])
             let _props = props as any
             for (var key in _props) {
                 if (key == "attach_file") {
-                    debugger;
-                    httpRequest.attach(key, _props[key])
+                    if (_props[key] instanceof Blob) {
+                        httpRequest.attach(key, _props[key])
+                    }
                 } else {
                     httpRequest.field(key, _props[key])
                 }
@@ -53,8 +54,22 @@ export default {
     },
     async update(props: PaymentType) {
         try {
-            let resData = await BaseService.superagent.post(BaseService.URL["payment.update"]).send(props);
-            return resData.body
+            let httpRequest = BaseService.superagent.post(BaseService.URL["payment.update"])
+            let _props = props as any
+            for (var key in _props) {
+                if (_props[key] == undefined) {
+                    continue
+                }
+                if (key == "attach_file") {
+                    if (_props[key] instanceof Blob) {
+                        httpRequest.attach(key, _props[key])
+                    }
+                } else {
+                    httpRequest.field(key, _props[key])
+                }
+            }
+            let resData = await httpRequest
+            return resData.body;
         } catch (error) {
             throw error
         }
@@ -79,6 +94,16 @@ export default {
         try {
             let resData = await BaseService.superagent.post(BaseService.URL["payment.delete"]).send({
                 ids: JSON.stringify(ids)
+            })
+            return resData.body
+        } catch (error) {
+            throw error
+        }
+    },
+    async validate(id:string){
+        try {
+            let resData = await BaseService.superagent.post(BaseService.URL["payment.validate"]).send({
+                id
             })
             return resData.body
         } catch (error) {

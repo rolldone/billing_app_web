@@ -65,6 +65,7 @@ export default {
         "payment.view": BASE_API_URL + "/api/payment/:id",
         "payment.update": BASE_API_URL + "/api/payment/update",
         "payment.delete": BASE_API_URL + "/api/payment/delete",
+        "payment.validate": BASE_API_URL + "/api/payment/validate",
 
         "payment_dest.payment_dests": BASE_API_URL + "/api/payment_dest/payment_dests",
         "payment_dest.new": BASE_API_URL + "/api/payment_dest/add",

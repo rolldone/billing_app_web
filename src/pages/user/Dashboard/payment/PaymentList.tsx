@@ -3,11 +3,15 @@ import BaseStateClass from "../../components/helper/BaseStateClass";
 import { Link } from "react-router-dom";
 import ROUTE_CLICK from "../../../../consts/RouteClick";
 import PaymentService, { PaymentType } from "../services/PaymentService";
-import { Dropdown } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 import SetUrl from "../../components/helper/SetUrl";
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Validate from "./PaymentList/Validate";
 
 export type StateType = {
     payment_datas: Array<PaymentType>
+    show_PaymentValidate: boolean
+    select_payment_data: PaymentType
 }
 
 export type PropType = {
@@ -33,6 +37,28 @@ export class PaymentClass extends BaseStateClass<StateType, PropType> {
         let _return = props.return
         this.setState({
             payment_datas: _return
+        })
+    }
+
+    handleClickValidate(props?: any, e?: any) {
+        let payment_datas = this.state.payment_datas
+        this.setState({
+            show_PaymentValidate: true,
+            select_payment_data: payment_datas[props.index]
+        })
+    }
+
+    handleClickDelete(props?: any, e?: any) {
+
+    }
+
+    handleValidateListener(props: any) {
+        if (props.action == "SUBMIT") {
+
+        }
+        this.setState({
+            select_payment_data: {},
+            show_PaymentValidate: false
         })
     }
 
@@ -154,18 +180,37 @@ export class PaymentClass extends BaseStateClass<StateType, PropType> {
                                             <td className="text-secondary">{val.bill?.total_price}</td>
                                             <td className="text-secondary">{val.updated_at}</td>
                                             <td>
-                                                <Link to={SetUrl(ROUTE_CLICK["user.payment.view"], [{ ":id": val.id }])}>Edit</Link>
+                                                <Dropdown as={ButtonGroup}>
+                                                    {val.status == "finish" ?
+                                                        <Button variant="success" href={SetUrl(ROUTE_CLICK["user.payment.view"], [{ ":id": val.id }])}>View</Button>
+                                                        :
+                                                        <Button variant="success" href={SetUrl(ROUTE_CLICK["user.payment.view"], [{ ":id": val.id }])}>Edit</Button>
+                                                    }
+
+                                                    {val.status != "finish" ?
+                                                        <>
+                                                            <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+
+                                                            <Dropdown.Menu>
+                                                                <Dropdown.Item onClick={this.handleClickDelete.bind(this, { index: i })}>Delete</Dropdown.Item>
+                                                                <Dropdown.Item onClick={this.handleClickValidate.bind(this, { index: i })}>Validate</Dropdown.Item>
+                                                            </Dropdown.Menu>
+                                                        </> : null}
+                                                </Dropdown>
+                                                {/* <Link to={SetUrl(ROUTE_CLICK["user.payment.view"], [{ ":id": val.id }])}>Edit</Link> */}
                                             </td>
                                         </tr>
                                     })}
-
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+            <Validate
+                show={this.state.show_PaymentValidate}
+                onListener={this.handleValidateListener.bind(this)}
+                payment_data={this.state.select_payment_data}></Validate>
         </>
     }
 }
@@ -175,7 +220,9 @@ export default function Payment(props: PropType) {
     let methods = useMemo(() => new PaymentClass(), []);
 
     methods.defineState(useState<StateType>({
-        payment_datas: []
+        payment_datas: [],
+        show_PaymentValidate: false,
+        select_payment_data: {}
     }), props);
 
     useEffect(() => {

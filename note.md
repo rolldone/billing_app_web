@@ -8,3 +8,4 @@ Sisi admin
 - admin bisa membuatkan payment secara manual jika bayarnya manual lewat kontak komunikasi
 - di new payment form akan di sesuaikan dengan kategori dari bill nya, jika one time, utang, recurring
 - jika bill itu recurring maka akan ditagih sesuai konfigurasinya
+- admin bisa memberi link payment, atau email ke customernnya

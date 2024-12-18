@@ -6,6 +6,8 @@ import ROUTE_CLICK from "../../../../consts/RouteClick";
 import SelectBillModal from "./PaymentNew/SelectBillModal";
 import PaymentDestService, { PaymentDestType } from "../services/PaymentDestService";
 import { DebouncedFunc } from "lodash-es";
+const BASE_API_URL = import.meta.env.VITE_PUBLIC_MASTER_DATA_API;
+const TOKEN = window.localStorage.getItem("token") || ""
 
 export type StateType = {
     form_data: PaymentType
@@ -32,58 +34,6 @@ export class PaymentNewClass extends BaseStateClass<StateType, PropType> {
                     ...form_data,
                     [e.target.name]: e.target.files?.[0]
                 }
-                // if (this.pendingOnChange != null) {
-                //     this.pendingOnChange.cancel()
-                // }
-
-                // let logo_string = ""
-                // const file = e.target.files?.[0]; // Get the first selected file
-
-                // if (file) {
-                //     // Check if the file is an image
-                //     if (!file.type.startsWith('image/')) {
-                //         alert('Please select a valid image file.');
-                //         return;
-                //     }
-
-                //     // Create an image object to check the dimensions
-                //     const img = new Image();
-                //     const reader = new FileReader();
-
-                //     reader.onloadend = () => {
-                //         if (reader.result) {
-                //             img.src = reader.result as string;
-                //         }
-                //     };
-
-                //     img.onload = () => {
-                //         // Check if the image's width and height are within the max dimensions (1000px)
-                //         if (img.width > 1000 || img.height > 1000) {
-                //             alert('Image dimensions should not exceed 1000px in width or height.');
-                //         } else {
-                //             // If valid, set the image and clear the error message
-                //             // logo_string = reader.result as string
-                //             this.setState({
-                //                 form_data: {
-                //                     ...this.state.form_data,
-                //                     // logo_string: logo_string
-                //                 }
-                //             })
-                //             // setTimeout(() => {
-                //             //     this.pendingOnChange = debounce(() => {
-                //             //         this.props.onChange({
-                //             //             target: {
-                //             //                 name: this.props.name,
-                //             //                 value: this.state.form_data
-                //             //             }
-                //             //         })
-                //             //     }, 1000)
-                //             //     this.pendingOnChange()
-                //             // }, 1000);
-                //         }
-                //     };
-                //     reader.readAsDataURL(file); // Read the file as a Data URL
-                // }
                 break;
             case "amount":
                 let remaining = form_data.remaining || 0;
@@ -134,6 +84,14 @@ export class PaymentNewClass extends BaseStateClass<StateType, PropType> {
         try {
             let form_data = this.state.form_data
             let resData = await PaymentService.add(form_data)
+            let _return = resData.return;
+            form_data = {
+                ...form_data,
+                ..._return
+            }
+            this.setState({
+                form_data
+            })
             alert("Insert data payment success")
         } catch (error) {
             console.error("save - error :: ", error);
@@ -188,6 +146,10 @@ export class PaymentNewClass extends BaseStateClass<StateType, PropType> {
                 })
                 break;
         }
+    }
+
+    print(index: string) {
+
     }
 
     render() {
@@ -372,14 +334,32 @@ export class PaymentNewClass extends BaseStateClass<StateType, PropType> {
                                     </small>
                                 </div>
                             </div>
+                            {(form_data.bill_id != null && (typeof form_data.attach_file as any) == 'string') ?
+                                <div className="mb-3">
+                                    {this.isImageFile(form_data.attach_file || "") == true ?
+                                        <img src={BASE_API_URL + "/api/payment/file/" + form_data.attach_file + "?token=" + TOKEN} />
+                                        :
+                                        <div>
+                                        </div>}
+                                </div>
+                                : null}
                         </div>
                         <div className="card-footer text-end">
-                            <button
-                                onClick={this.save.bind(this)}
-                                type="submit"
-                                className="btn btn-primary">
-                                Submit
-                            </button>
+                            {form_data.status == "finish" ?
+                                <button
+                                    onClick={this.print.bind(this, form_data.id || "")}
+                                    type="submit"
+                                    className="btn btn-primary">
+                                    Print
+                                </button>
+                                :
+                                <button
+                                    onClick={this.save.bind(this)}
+                                    type="submit"
+                                    className="btn btn-primary">
+                                    Submit
+                                </button>
+                            }
                         </div>
                     </div>
                 </div>
@@ -388,6 +368,19 @@ export class PaymentNewClass extends BaseStateClass<StateType, PropType> {
                 show={this.state.show_select_bill_modal}
                 onListener={this.handleListener.bind(this, "SELECT_BILL_MODAL_LISTENER")}></SelectBillModal>
         </>
+    }
+
+    isImageFile(filename: string): boolean {
+        // Define the valid image extensions 
+        const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".svg", ".bmp", ".webp"];
+        // Get the file extension 
+        const extension = filename.slice((Math.max(0, filename.lastIndexOf(".")) || Infinity) + 1).toLowerCase();
+        // Check if the extension is in the list of image extensions 
+        if (imageExtensions.includes(`.${extension}`)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

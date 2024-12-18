@@ -33,6 +33,14 @@ export class PaymentUpdateClass extends PaymentNewClass {
         try {
             let form_data = this.state.form_data
             let resData = await PaymentService.update(form_data);
+            let _return = resData.return;
+            form_data = {
+                ...form_data,
+                ..._return
+            }
+            this.setState({
+                form_data
+            })
             alert("Update data success")
         } catch (error) {
             console.error("save - err :: ", error)
