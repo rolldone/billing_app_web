@@ -7,11 +7,14 @@ import { Button, Dropdown } from "react-bootstrap";
 import SetUrl from "../../components/helper/SetUrl";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Validate from "./PaymentList/Validate";
+import Delete from "./PaymentList/Delete";
 
 export type StateType = {
     payment_datas: Array<PaymentType>
     show_PaymentValidate: boolean
+    show_PaymentDelete: boolean
     select_payment_data: PaymentType
+    select_payment_ids: Array<string>
 }
 
 export type PropType = {
@@ -49,7 +52,13 @@ export class PaymentClass extends BaseStateClass<StateType, PropType> {
     }
 
     handleClickDelete(props?: any, e?: any) {
-
+        let payment_datas = this.state.payment_datas
+        let payment_data = payment_datas[props.index]
+        let ids = [payment_data.id || ""];
+        this.setState({
+            show_PaymentDelete: true,
+            select_payment_ids: ids
+        })
     }
 
     handleValidateListener(props: any) {
@@ -59,6 +68,16 @@ export class PaymentClass extends BaseStateClass<StateType, PropType> {
         this.setState({
             select_payment_data: {},
             show_PaymentValidate: false
+        })
+    }
+
+    handleDeleteListener(props: any) {
+        if (props.action == "SUBMIT") {
+
+        }
+        this.setState({
+            select_payment_data: {},
+            show_PaymentDelete: false
         })
     }
 
@@ -151,6 +170,8 @@ export class PaymentClass extends BaseStateClass<StateType, PropType> {
                                         </th>
                                         <th>Id</th>
                                         <th>Status</th>
+                                        <th>Bill Type</th>
+                                        <th>Amount</th>
                                         <th>Total Price</th>
                                         <th>Updated at</th>
                                         {/* <th className="w-1" /> */}
@@ -177,6 +198,8 @@ export class PaymentClass extends BaseStateClass<StateType, PropType> {
                                             </td>
                                             <td>{val.id}</td>
                                             <td className="text-secondary">{val.status}</td>
+                                            <td className="text-secondary">{val.bill?.type}</td>
+                                            <td className="text-secondary">{val.amount}</td>
                                             <td className="text-secondary">{val.bill?.total_price}</td>
                                             <td className="text-secondary">{val.updated_at}</td>
                                             <td>
@@ -211,6 +234,10 @@ export class PaymentClass extends BaseStateClass<StateType, PropType> {
                 show={this.state.show_PaymentValidate}
                 onListener={this.handleValidateListener.bind(this)}
                 payment_data={this.state.select_payment_data}></Validate>
+            <Delete
+                show={this.state.show_PaymentDelete}
+                onListener={this.handleDeleteListener.bind(this)}
+                ids={this.state.select_payment_ids || []}></Delete>
         </>
     }
 }
@@ -222,7 +249,9 @@ export default function Payment(props: PropType) {
     methods.defineState(useState<StateType>({
         payment_datas: [],
         show_PaymentValidate: false,
-        select_payment_data: {}
+        select_payment_data: {},
+        show_PaymentDelete: false,
+        select_payment_ids: []
     }), props);
 
     useEffect(() => {

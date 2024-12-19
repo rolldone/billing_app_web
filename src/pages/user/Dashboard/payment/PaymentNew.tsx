@@ -124,7 +124,9 @@ export class PaymentNewClass extends BaseStateClass<StateType, PropType> {
         let payments = this.state.form_data.bill?.payments || []
         let remaining = 0;
         for (let a = 0; a < payments.length; a++) {
-            remaining += payments[a].amount || 0
+            if(payments[a].status == "finish"){
+                remaining += payments[a].amount || 0
+            }
         }
         remaining = (this.state.form_data.bill?.total_price || 0) - remaining
 

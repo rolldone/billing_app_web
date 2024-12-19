@@ -9,3 +9,4 @@ Sisi admin
 - di new payment form akan di sesuaikan dengan kategori dari bill nya, jika one time, utang, recurring
 - jika bill itu recurring maka akan ditagih sesuai konfigurasinya
 - admin bisa memberi link payment, atau email ke customernnya
+- ketika validate harus dipastikan ada pengecekan debt telah mencapai total jika paymentnnya debt. untuk jaga jaga agar tidak terjadi total yang melebihi harga total sebenernya [Buat kondisi di front end]

@@ -74,6 +74,17 @@ export default {
             throw error
         }
     },
+    async delete(ids: Array<string>) {
+        try {
+            let httpRequest = BaseService.superagent.post(BaseService.URL["payment.delete"]).send({
+                ids: ids
+            })
+            let resData = await httpRequest
+            return resData.body;
+        } catch (error) {
+            throw error
+        }
+    },
     async gets(props?: PaymentQueryType) {
         try {
             let resData = await BaseService.superagent.get(BaseService.URL["payment.payments"]).query(props || {});
@@ -90,17 +101,7 @@ export default {
             throw error
         }
     },
-    async delete(ids: Array<string>) {
-        try {
-            let resData = await BaseService.superagent.post(BaseService.URL["payment.delete"]).send({
-                ids: JSON.stringify(ids)
-            })
-            return resData.body
-        } catch (error) {
-            throw error
-        }
-    },
-    async validate(id:string){
+    async validate(id: string) {
         try {
             let resData = await BaseService.superagent.post(BaseService.URL["payment.validate"]).send({
                 id

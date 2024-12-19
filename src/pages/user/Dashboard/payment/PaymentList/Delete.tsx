@@ -5,42 +5,23 @@ import { Button, Modal } from "react-bootstrap"
 
 type PropType = {
     show: boolean
-    payment_data: PaymentType
+    ids: Array<string>
     onListener: { (props: any): void }
 }
 
 type StateType = {
-    payment_data: PaymentType
 }
 
-export class ValidateClass extends BaseStateClass<StateType, PropType> {
+export class DeleteClass extends BaseStateClass<StateType, PropType> {
 
 
-    async getPaymentData() {
+    async deletePayment() {
+        let ids = this.props.ids
         try {
-            let form_data = this.state.payment_data
-            let resData = await PaymentService.getById(form_data.id || "")
-            return resData
+            let resData = await PaymentService.delete(ids)
+            alert("Payment data is deleted")
         } catch (error) {
-            console.error("getPaymentData - err ", error)
-        }
-    }
-
-    setPaymentData(props: any) {
-        if (props == null) return
-        let _return = props.return
-        this.setState({
-            payment_data: _return
-        })
-    }
-
-    async validatePayment() {
-        let form_data = this.state.payment_data
-        try {
-            let resData = await PaymentService.validate(form_data.id || "")
-            alert("Payment data is validated")
-        } catch (error) {
-            console.error("validatePayment - err ", error)
+            console.error("deletePayment - err ", error)
         } finally {
             this.props.onListener({
                 action: "SUBMIT",
@@ -52,7 +33,7 @@ export class ValidateClass extends BaseStateClass<StateType, PropType> {
 
     handleClose(submit?: boolean) {
         if (submit == true) {
-            this.validatePayment()
+            this.deletePayment()
             return
         }
         this.props.onListener({
@@ -66,32 +47,27 @@ export class ValidateClass extends BaseStateClass<StateType, PropType> {
             <Modal.Header closeButton>
                 <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Do you want validate this payment?</Modal.Body>
+            <Modal.Body>Do you want delete this payment?</Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={this.handleClose.bind(this, false)}>
                     Close
                 </Button>
                 <Button variant="primary" onClick={this.handleClose.bind(this, true)}>
-                    Validate
+                    Delete
                 </Button>
             </Modal.Footer>
         </Modal>
     }
 }
 
-export default function Validate(props: PropType) {
-    let methods = useMemo(() => new ValidateClass(), []);
+export default function Delete(props: PropType) {
+    let methods = useMemo(() => new DeleteClass(), []);
 
-    methods.defineState(useState<StateType>({
-        payment_data: {}
-    }), props);
+    methods.defineState(useState<StateType>({}), props);
 
     useEffect(() => {
         if (props.show == false) return
-        methods.setState({
-            payment_data: props.payment_data
-        })
-    }, [props.payment_data])
+    }, [])
 
     return methods.render()
 }

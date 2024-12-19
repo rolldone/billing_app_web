@@ -46,6 +46,7 @@ export class SelectBillModalClass extends BaseStateClass<StateType, PropType> {
         try {
             let form_query = this.state.form_query
             form_query.with = "payments";
+            form_query.status = "pending"
             let resData = await BillService.gets(form_query);
             return resData
         } catch (error) {
