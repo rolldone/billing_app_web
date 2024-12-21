@@ -3,11 +3,15 @@ import BaseStateClass from "../../components/helper/BaseStateClass";
 import { Link } from "react-router-dom";
 import ROUTE_CLICK from "../../../../consts/RouteClick";
 import BillService, { BillType } from "../services/BillService";
-import { Dropdown } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 import SetUrl from "../../components/helper/SetUrl";
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import NotifUserModal from "./BillList/NotifUserModal";
 
 export type StateType = {
     bill_datas: Array<BillType>
+    select_bill_data: BillType
+    show_NotifUserModal: boolean
 }
 
 export type PropType = {
@@ -112,6 +116,20 @@ export class BillListClass extends BaseStateClass<StateType, PropType> {
         </div>
     }
 
+    handleClickNotificationUser(props?: any) {
+        let bill_data = this.state.bill_datas[props.index]
+        this.setState({
+            select_bill_data: bill_data,
+            show_NotifUserModal: true
+        })
+    }
+
+    handleNotifUserModalListener(props?: any) {
+        this.setState({
+            show_NotifUserModal: false
+        })
+    }
+
     render() {
         let bill_datas = this.state.bill_datas
         return <>
@@ -128,6 +146,7 @@ export class BillListClass extends BaseStateClass<StateType, PropType> {
                                         </th>
                                         <th>Project</th>
                                         <th>Total</th>
+                                        <th>Status</th>
                                         <th>Member</th>
                                         <th>Updated at</th>
                                         {/* <th className="w-1" /> */}
@@ -165,10 +184,28 @@ export class BillListClass extends BaseStateClass<StateType, PropType> {
                                                 </div>
                                             </td>
                                             <td className="text-secondary">{val.total_price}</td>
+                                            <td className="text-secondary">{val.status}</td>
                                             <td className="text-secondary">{val.member?.name}</td>
                                             <td className="text-secondary">{val.updated_at}</td>
                                             <td>
-                                                <Link to={SetUrl(ROUTE_CLICK["user.bill.view"], [{ ":id": val.id }])}>Edit</Link>
+                                                <Dropdown as={ButtonGroup}>
+                                                    {val.status == "finish" ?
+                                                        <Button variant="success" href={SetUrl(ROUTE_CLICK["user.bill.view"], [{ ":id": val.id }])}>View</Button>
+                                                        :
+                                                        <Button variant="success" href={SetUrl(ROUTE_CLICK["user.bill.view"], [{ ":id": val.id }])}>Edit</Button>
+                                                    }
+
+                                                    {val.status != "finish" ?
+                                                        <>
+                                                            <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+
+                                                            <Dropdown.Menu>
+                                                                {/* <Dropdown.Item onClick={this.handleClickDelete.bind(this, { index: i })}>Delete</Dropdown.Item> */}
+                                                                <Dropdown.Item onClick={this.handleClickNotificationUser.bind(this, { index: i })}>Notif</Dropdown.Item>
+                                                            </Dropdown.Menu>
+                                                        </> : null}
+                                                </Dropdown>
+                                                {/* <Link to={SetUrl(ROUTE_CLICK["user.payment.view"], [{ ":id": val.id }])}>Edit</Link> */}
                                             </td>
                                         </tr>
                                     })}
@@ -178,6 +215,10 @@ export class BillListClass extends BaseStateClass<StateType, PropType> {
                     </div>
                 </div>
             </div>
+            <NotifUserModal
+                show={this.state.show_NotifUserModal}
+                bill_data={this.state.select_bill_data}
+                onListener={this.handleNotifUserModalListener.bind(this)}></NotifUserModal>
         </>
     }
 }
@@ -186,7 +227,9 @@ export default function BillList(props: PropType) {
     let methods = useMemo(() => new BillListClass(), []);
 
     methods.defineState(useState<StateType>({
-        bill_datas: []
+        bill_datas: [],
+        select_bill_data: {},
+        show_NotifUserModal: false
     }), props);
 
     useEffect(() => {
